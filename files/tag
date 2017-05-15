@@ -1,0 +1,25 @@
+#!/bin/sh
+
+file=$1
+shift
+
+printf "%0.3d: " $1 >> $file
+
+shift
+
+while [[ $# -ne 0 ]]; do
+	if [[ $1 == ":" ]]; then
+		c=
+	else
+		c=0
+	fi
+	if [[ $b ]]; then
+		if [[ $c ]]; then
+			echo -n ,
+		fi
+	fi
+	b=$c
+	echo -n $1
+	shift
+done >> $file
+echo >> $file

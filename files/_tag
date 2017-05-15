@@ -1,0 +1,32 @@
+#compdef tag
+
+local groups tags
+
+local -a args
+
+local curcontext="$curcontext" state tag
+
+args=(
+	'1: :->file'
+	'*: :->tag'
+)
+_arguments -s -S $args
+
+dir="/usr/share/tag/"
+
+case $state in
+file)
+	_files
+	;;
+tag)
+	_tags $(ls $dir)
+	while _tags; do
+		ls $dir | while read t; do
+			while read s; do
+				_requested $t expl $t compadd $s
+			done < $dir$t
+		done
+	done
+	;;
+esac
+
